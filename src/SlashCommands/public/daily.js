@@ -10,7 +10,7 @@ module.exports = {
      || await client.userDB.create({ _id: interaction.user.id })
 
     if (userDatabase.cooldowns.daily < Date.now()) {
-      const Amount = Math.floor(Math.random() * 300)
+      const Amount = Math.floor(Math.random() * 250 + 50);
 
       await client.userDB.updateOne({ _id: interaction.user.id }, {
         $inc: {
