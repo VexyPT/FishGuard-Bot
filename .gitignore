@@ -1,0 +1,6 @@
+.env
+.env.development
+node_modules
+package-lock.json
+squarecloud.config
+settings
