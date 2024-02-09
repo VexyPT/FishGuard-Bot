@@ -45,16 +45,16 @@ module.exports = {
             })
         }
 
-        await client.userDB.updateOne({ _id: reciveUserMention.id }, {
-            $inc: {
-                money: moneyAmount
-            }
-        });
-
         await client.userDB.updateOne({ _id: interaction.user.id }, {
-            $dec: {
-                money: moneyAmount
+            $inc: {
+                money: - moneyAmount
             }
+        }).then(async() => {
+            await client.userDB.updateOne({ _id: reciveUserMention.id }, {
+                $inc: {
+                    money: moneyAmount
+                }
+            });
         });
 
         await interaction.reply({
