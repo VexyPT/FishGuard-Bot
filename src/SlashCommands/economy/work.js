@@ -62,7 +62,7 @@ module.exports = {
         } else {
 
             const embedTired = new EmbedBuilder()
-            .setDescription(`> ${client.emoji.error} You're very tired now! Wait a while before going back to work again (<t:${Math.floor(userDatabase.cooldowns.work / 1000)}:R>)`)
+            .setDescription(`> ${client.emoji.error} You're very tired now! Wait a while before going back to work again <t:${Math.floor(userDatabase.cooldowns.work / 1000)}:R>`)
             .setColor(`${client.color.red}`);
 
             return interaction.reply({
