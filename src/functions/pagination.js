@@ -100,7 +100,7 @@ module.exports = async (interaction, pages, time = 30 * 1000) => {
  
         return msg;
     } catch (e) {
-        console.error(`[ERROR] ${e}`);
+        console.error(`[ERROR - PAGINATION] ${e}`);
     }
  
 }
