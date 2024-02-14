@@ -1,4 +1,4 @@
-const { ApplicationCommandType, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { ApplicationCommandType, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require("discord.js");
 const ms = require("ms");
 
 module.exports = {
@@ -58,7 +58,7 @@ module.exports = {
         .addOptions(
             Object.keys(jobs).map(job => {
                 return {
-                    label: job,
+                    label: jobs[job].name,
                     value: job,
                     emoji: jobs[job].emoji
                 }
@@ -75,6 +75,8 @@ module.exports = {
         collector.on("collect", async i => {
             if (i.isStringSelectMenu()) {
 
+                const work = i.values[0];
+
                 const embedJob = new EmbedBuilder()
                 .setTitle(`${jobs[work].name} ${jobs[work].emoji}`)
                 .addFields(
@@ -82,8 +84,6 @@ module.exports = {
                     { name: `> **Cooldown:**`, value: `\`${ms(jobs[work].cooldown)}\``},
                     { name: `> **Max Salary:**`, value: `${jobs[work].maxMoney + 500}`}
                 )
-
-                const work = i.values[0];
 
                 const button = new ActionRowBuilder().addComponents(
                     new ButtonBuilder()
