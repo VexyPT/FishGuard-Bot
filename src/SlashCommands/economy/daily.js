@@ -20,7 +20,7 @@ module.exports = {
 
       await client.userDB.updateOne({ _id: interaction.user.id }, {
         $set: {
-          "cooldowns.daily": Date.now() + 86400 // 1 day in seconds
+          "cooldowns.daily": Date.now() + 86400 * 1000 // 1 day in seconds
         }
       });
 

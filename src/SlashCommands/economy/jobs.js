@@ -95,12 +95,12 @@ module.exports = {
                 const button = new ActionRowBuilder().addComponents(
                     new ButtonBuilder()
                     .setCustomId(`accept_${work}`)
-                    .setEmoji("✅")
+                    .setEmoji(`${client.emoji.check}`)
                     .setLabel("Accept Job")
                     .setStyle(ButtonStyle.Secondary),
                     new ButtonBuilder()
                     .setCustomId(`reject_job`)
-                    .setEmoji("❎")
+                    .setEmoji(`${client.emoji.error}`)
                     .setLabel("Reject Job")
                     .setStyle(ButtonStyle.Secondary)
                 );                
