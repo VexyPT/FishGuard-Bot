@@ -14,7 +14,7 @@ module.exports = {
     });
 
     const jobs = {
-        garbage_collector: {
+        garbageCollector: {
             name: "Garbage Collector",
             emoji: "🗑️",
             cooldown: 1000 * 60 * 45,
@@ -28,21 +28,21 @@ module.exports = {
             description: "Go fish with your dad (if you have one)",
             maxMoney: 1600
         },
-        sedex_delivery: {
+        sedexDelivery: {
             name: "Sedex Delivery",
             emoji: "📦",
             cooldown: 1000 * 60 * 420,
             description: "Deliver packages",
             maxMoney: 2000
         },
-        truck_driver: {
+        truckDriver: {
             name: "Truck Driver",
             emoji: "🚚",
             cooldown: 1000 * 60 * 300,
             description: "Drive and drive for hours to deliver some chicken feed to companies",
             maxMoney: 2500
         },
-        game_developer: {
+        gameDeveloper: {
             name: "Game Developer",
             emoji: "👾",
             cooldown: 1000 * 60 * 600,
@@ -103,13 +103,16 @@ module.exports = {
             if (i.isButton()) {
                 const [, work] = i.customId.split("_");
 
-                if (work == userDatabase.work.workedWith) return i.reply({
-                    content: `> Bro, that's already your job, wake up!`
+                if (work == userDatabase.work.workedWith) return i.update({
+                    content: `> Bro, that's already your job, wake up!`,
+                    components: [],
+                    embeds: []
                 });
 
                 i.update({
-                    content: `> Congratulations! You now work as a ${jobs[work].name} ${jobs[work].emoji}`,
+                    content: `> Congratulations! You now work as a ${work}`,
                     components: [],
+                    embeds: []
                 });
 
                 await client.userDB.updateOne({
