@@ -145,7 +145,9 @@ module.exports = {
                         work: {
                             maxMoney: jobs[work].maxMoney,
                             workedWith: work,
-                            cooldown: jobs[work].cooldown
+                        },
+                        cooldowns: {
+                            work: jobs[work].cooldown
                         }
                     }
                 });
