@@ -6,7 +6,7 @@ module.exports = {
   type: ApplicationCommandType.ChatInput,
   run: async(client, interaction) => {
 
-    await interaction.reply({ content: `${client.ws.ping}ms`, ephemeral: true });
+    await interaction.reply({ content: `> ${client.ws.ping}ms`, ephemeral: true });
 
   }
 }

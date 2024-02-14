@@ -6,8 +6,15 @@ module.exports = {
   type: ApplicationCommandType.ChatInput,
   run: async(client, interaction) => {
 
-    const userDatabase = await client.userDB.findOne({ _id: interaction.user.id})
-     || await client.userDB.create({ _id: interaction.user.id });
+    const userDatabase = await client.userDB.findOne({
+      _id: interaction.user.id
+    }) || await client.userDB.create({ _id: interaction.user.id });
+
+    const embedConfirm = new EmbedBuilder()
+    .setColor(`${client.color.green}`);
+
+    const embedReject = new EmbedBuilder()
+    .setColor(`${client.color.red}`);
 
     if (userDatabase.cooldowns.daily < Date.now()) {
       const Amount = Math.floor(Math.random() * 250 + 50); // I put "+ 50" so that the minimum is 50
@@ -24,12 +31,17 @@ module.exports = {
         }
       });
 
+      embedConfirm.setDescription(`> You have successfully redeemed your daily reward and received ${Amount} ${client.emoji.coin}`)
+
       await interaction.reply({
-        content: `> You have successfully redeemed your daily reward and received ${Amount} ${client.emoji.coin}`
+        embeds: [embedConfirm]
       });
     } else {
+
+      embedReject.setDescription(`> You still can't redeem your daily reward,back in <t:${Math.floor(userDatabase.cooldowns.daily / 1000)}:R>`)
+
       await interaction.reply({
-        content: `> You still can't redeem your daily reward,back in <t:${Math.floor(userDatabase.cooldowns.daily / 1000)}:R>`,
+        embeds: [embedReject],
         ephemeral: true
       });
     }

@@ -52,15 +52,21 @@ module.exports = {
             const workName = workMappings[userDatabase.work.workedWith] || userDatabase.work.workedWith;
 
             const embedJobDone = new EmbedBuilder()
-            .setDescription(`> You worked as a ${workName} and got paid ${money} ${client.emoji.coin}`);
+            .setDescription(`> You worked as a ${workName} and got paid ${money} ${client.emoji.coin}`)
+            .setColor(`${client.color.green}`);
 
             await interaction.reply({
                 embeds: [embedJobDone]
             });
 
         } else {
+
+            const embedTired = new EmbedBuilder()
+            .setDescription(`> ${client.emoji.error} You're very tired now! Wait a while before going back to work again (<t:${Math.floor(userDatabase.cooldowns.work / 1000)}:R>)`)
+            .setColor(`${client.color.red}`);
+
             return interaction.reply({
-                content: `> ${client.emoji.error} You're very tired now! Wait a while before going back to work again (<t:${Math.floor(userDatabase.cooldowns.work / 1000)}:R>)`,
+                embeds: [embedTired],
                 ephemeral: true
             });
         }

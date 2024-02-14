@@ -1,4 +1,4 @@
-const { ApplicationCommandType, ApplicationCommandOptionType } = require("discord.js");
+const { ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "pay",
@@ -31,16 +31,28 @@ module.exports = {
 
         const moneyAmount = interaction.options.getNumber("amount");
 
+        const embedConfirm = new EmbedBuilder()
+        .setColor(`${client.color.green}`);
+
+        const embedReject = new EmbedBuilder()
+        .setColor(`${client.color.red}`);
+
         if (reciveUserMention == sendUser) {
+
+            embedReject.setDescription(`> Sorry! you can't send money to yourself`)
+
             return interaction.reply({
-                content: `> Sorry! you can't send money to yourself`,
+                embeds: [embedReject],
                 ephemeral: true
             });
         }
 
         if(sendUser.money < moneyAmount) {
+
+            embedReject.setDescription(`> You don't have enough money to complete this transaction, you need another ${moneyAmount - sendUser.money} ${client.emoji.coin}`)
+
             return interaction.reply({
-                content: `> You don't have enough money to complete this transaction, you need another ${moneyAmount - sendUser.money} ${client.emoji.coin}`,
+                embeds: [embedReject],
                 ephemeral: true
             });
         }
@@ -57,8 +69,10 @@ module.exports = {
             });
         });
 
+        embedConfirm.setDescription(`> You have successfully sent ${moneyAmount} ${client.emoji.coin} to ${reciveUserMention}`)
+
         await interaction.reply({
-            content: `> You have successfully sent ${moneyAmount} ${client.emoji.coin} to ${reciveUserMention}`
+            embeds: [embedConfirm]
         });
 
     }
