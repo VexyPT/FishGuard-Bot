@@ -113,44 +113,54 @@ module.exports = {
             }
 
             if (i.isButton() && i.customId.startsWith("accept_")) {
-                const [, work] = i.customId.split("_");
 
-                const workMappings = {
-                    garbageCollector: "Garbage Collector",
-                    fisherman: "Fisherman",
-                    sedexDelivery: "Sedex Delivery",
-                    truckDriver: "Truck Driver",
-                    gameDeveloper: "Game Developer",
-                    pizzaDelivery: "Pizza Delivery"
-                }
+                if (userDatabase.cooldowns.changeJob < Date.now()) {
+                    const [, work] = i.customId.split("_");
 
-                const workName = workMappings[work] || work;
-
-                if (work == userDatabase.work.workedWith) return i.update({
-                    content: `> That's already your job.`,
-                    components: [],
-                    embeds: []
-                });
-
-                i.update({
-                    content: `> Congratulations! You now work as a ${workName}`,
-                    components: [],
-                    embeds: []
-                });
-
-                await client.userDB.updateOne({
-                    _id: interaction.user.id
-                }, {
-                    $set: {
-                        work: {
-                            maxMoney: jobs[work].maxMoney,
-                            workedWith: work,
-                        },
-                        cooldowns: {
-                            work: jobs[work].cooldown
-                        }
+                    const workMappings = {
+                        garbageCollector: "Garbage Collector",
+                        fisherman: "Fisherman",
+                        sedexDelivery: "Sedex Delivery",
+                        truckDriver: "Truck Driver",
+                        gameDeveloper: "Game Developer",
+                        pizzaDelivery: "Pizza Delivery"
                     }
-                });
+
+                    const workName = workMappings[work] || work;
+
+                    if (work == userDatabase.work.workedWith) return i.update({
+                        content: `> That's already your job.`,
+                        components: [],
+                        embeds: []
+                    });
+
+                    i.update({
+                        content: `> Congratulations! You now work as a ${workName}`,
+                        components: [],
+                        embeds: []
+                    });
+
+                    await client.userDB.updateOne({
+                        _id: interaction.user.id
+                    }, {
+                        $set: {
+                            work: {
+                                maxMoney: jobs[work].maxMoney,
+                                workedWith: work,
+                            },
+                            cooldowns: {
+                                work: jobs[work].cooldown,
+                                changeJob: Date.now() + 86400 * 1000
+                            }
+                        }
+                    });
+                } else {
+                    return i.update({
+                        content: `> ${client.emoji.error} You recently changed your job, you can change again <t:${Math.floor(userDatabase.cooldowns.changeJob / 1000)}:R>`,
+                        embeds: [],
+                        components: [],
+                    })
+                }
 
             } else if (i.isButton() && i.customId == "reject_job") {
                 i.update({
