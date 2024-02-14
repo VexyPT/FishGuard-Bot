@@ -4,12 +4,12 @@ const userSet = new Schema({
   _id: { type: String },
   money: { type: Number, default: 0 },
   cooldowns: {
-    daily: { type: String , default: 0 }
+    daily: { type: String , default: 0 },
+    work: { type: Number }
   },
   work: {
     workedWith: { type: String },
     maxMoney: { type: Number },
-    cooldown: { type: Number }
   }
 });
 
