@@ -99,6 +99,35 @@ module.exports = {
                     components: [button]
                 });
             }
+
+            if (i.isButton()) {
+                const [, work] = i.customId.split("_");
+
+                if (work == userDatabase.work.workedWith) return i.reply({
+                    content: `> Bro, that's already your job, wake up!`
+                });
+
+                i.updaate({
+                    content: `> Congratulations! You now work as a ${work.name}`,
+                    components: []
+                });
+
+                await client.userDB.updateOne({
+                    _id: interaction.user.id
+                }, {
+                    $set: {
+                        work: {
+                            maxMoney: jobs[work].maxMoney,
+                            workedWith: work,
+                            cooldown: jobs[work].cooldown
+                        }
+                    }
+                });
+
+
+            }
+
+            if (jobs) {}
         })
     })
 
