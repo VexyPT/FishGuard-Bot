@@ -90,6 +90,11 @@ module.exports = {
                     .setCustomId(`accept_${work}`)
                     .setEmoji("✅")
                     .setLabel("Accept Job")
+                    .setStyle(ButtonStyle.Secondary),
+                    new ButtonBuilder()
+                    .setCustomId(`reject_job`)
+                    .setEmoji("❎")
+                    .setLabel("Reject Job")
                     .setStyle(ButtonStyle.Secondary)
                 );                
                 
@@ -100,17 +105,27 @@ module.exports = {
                 });
             }
 
-            if (i.isButton()) {
+            if (i.isButton() && i.customId.startsWith("accept_")) {
                 const [, work] = i.customId.split("_");
 
+                const workMappings = {
+                    garbageCollector: "Garbage Collector",
+                    fisherman: "Fisherman",
+                    sedexDelivery: "Sedex Delivery",
+                    truckDriver: "Truck Driver",
+                    gameDeveloper: "Game Developer"
+                }
+
+                const workName = workMappings[work] || work;
+
                 if (work == userDatabase.work.workedWith) return i.update({
-                    content: `> Bro, that's already your job, wake up!`,
+                    content: `> That's already your job.`,
                     components: [],
                     embeds: []
                 });
 
                 i.update({
-                    content: `> Congratulations! You now work as a ${work}`,
+                    content: `> Congratulations! You now work as a ${workName}`,
                     components: [],
                     embeds: []
                 });
@@ -127,10 +142,12 @@ module.exports = {
                     }
                 });
 
-
+            } else if (i.isButton() && i.customId == "reject_job") {
+                i.update({
+                    content: `> Choose a job`,
+                    components: [row], ephemeral: true, fetchReply: true
+                });
             }
-
-            //if () {}
         })
     })
 
