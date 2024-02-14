@@ -25,7 +25,7 @@ module.exports = {
       });
 
       await interaction.reply({
-        content: `> You have successfully redeemed your daily reward and received **\`${Amount} $\`**`
+        content: `> You have successfully redeemed your daily reward and received ${Amount} ${client.emoji.coin}`
       });
     } else {
       await interaction.reply({

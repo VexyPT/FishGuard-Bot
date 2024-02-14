@@ -23,7 +23,7 @@ module.exports = {
     });
 
     await interaction.reply({
-      content: `> Bank Account: ${userDatabase.money}$`,
+      content: `> Bank Account: ${userDatabase.money} ${client.emoji.coin}`,
       ephemeral: hideOrNot
     });
 

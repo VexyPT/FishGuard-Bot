@@ -40,7 +40,7 @@ module.exports = {
 
         if(sendUser.money < moneyAmount) {
             return interaction.reply({
-                content: `> You don't have enough money to complete this transaction, you need another **\`${moneyAmount - sendUser.money}$\`**`,
+                content: `> You don't have enough money to complete this transaction, you need another ${moneyAmount - sendUser.money} ${client.emoji.coin}`,
                 ephemeral: true
             });
         }
@@ -58,7 +58,7 @@ module.exports = {
         });
 
         await interaction.reply({
-            content: `> You have successfully sent ${moneyAmount}$ to ${reciveUserMention}`
+            content: `> You have successfully sent ${moneyAmount} ${client.emoji.coin} to ${reciveUserMention}`
         });
 
     }
