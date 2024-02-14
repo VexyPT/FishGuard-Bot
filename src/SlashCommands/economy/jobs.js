@@ -82,7 +82,7 @@ module.exports = {
                 .addFields(
                     { name: `> **Description:**`, value: `\`${jobs[work].description}\``},
                     { name: `> **Cooldown:**`, value: `\`${ms(jobs[work].cooldown)}\``},
-                    { name: `> **Max Salary:**`, value: `\`${jobs[work].maxMoney + 500}\``}
+                    { name: `> **Max Salary:**`, value: `\`${jobs[work].maxMoney + 500}$\``}
                 )
 
                 const button = new ActionRowBuilder().addComponents(
