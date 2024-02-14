@@ -11,6 +11,7 @@ const userSet = new Schema({
   work: {
     workedWith: { type: String },
     maxMoney: { type: Number },
+    jobCooldown: { type: Number }
   }
 });
 
