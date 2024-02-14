@@ -2,7 +2,7 @@ const { ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder } = r
 
 module.exports = {
   name: "wallet",
-  description: "See how much money you have in your wallet",
+  description: "See how much money you have in your wallet  ",
   type: ApplicationCommandType.ChatInput,
   options: [
     {

@@ -1,4 +1,4 @@
-const { ApplicationCommandType } = require("discord.js");
+const { ApplicationCommandType, EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "daily",
