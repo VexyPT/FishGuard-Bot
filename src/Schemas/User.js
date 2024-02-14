@@ -5,7 +5,12 @@ const userSet = new Schema({
   money: { type: Number, default: 0 },
   cooldowns: {
     daily: { type: String , default: 0 }
-}
+  },
+  work: {
+    workedWith: { type: String },
+    maxMoney: { type: Number },
+    cooldown: { type: Number }
+  }
 });
 
 module.exports = model("Users", userSet);
