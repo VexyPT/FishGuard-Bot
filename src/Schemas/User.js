@@ -5,7 +5,7 @@ const userSet = new Schema({
   money: { type: Number, default: 0 },
   cooldowns: {
     daily: { type: String , default: 0 },
-    work: { type: Number },
+    work: { type: String },
     changeJob: { type: String, default: 0 }
   },
   work: {
