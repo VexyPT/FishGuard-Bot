@@ -140,7 +140,7 @@ module.exports = {
                         embedReject.setDescription(`> ${client.emoji.error} That's already your job.`)
 
                         i.update({
-                            content: [``],
+                            content: ``,
                             components: [],
                             embeds: [embedReject]
                         });
@@ -149,7 +149,7 @@ module.exports = {
                     embedConfirm.setDescription(`> ${client.emoji.check} Congratulations! You now work as a ${workName}`)
 
                     i.update({
-                        content: [``],
+                        content: ``,
                         components: [],
                         embeds: [embedConfirm]
                     });
@@ -174,7 +174,7 @@ module.exports = {
                     embedReject.setDescription(`> ${client.emoji.error} You recently changed your job, you can change again <t:${Math.floor(userDatabase.cooldowns.changeJob / 1000)}:R>`)
 
                     return i.update({
-                        content: [``],
+                        content: ``,
                         embeds: [embedReject],
                         components: [],
                     })
