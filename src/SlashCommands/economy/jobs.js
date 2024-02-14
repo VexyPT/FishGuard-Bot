@@ -13,6 +13,12 @@ module.exports = {
         _id: interaction.user.id 
     });
 
+    const embedConfirm = new EmbedBuilder()
+    .setColor(`${client.color.green}`);
+
+    const embedReject = new EmbedBuilder()
+    .setColor(`${client.color.red}`);
+
     const jobs = {
         garbageCollector: {
             name: "Garbage Collector",
@@ -128,16 +134,23 @@ module.exports = {
 
                     const workName = workMappings[work] || work;
 
-                    if (work == userDatabase.work.workedWith) return i.update({
-                        content: `> That's already your job.`,
-                        components: [],
-                        embeds: []
-                    });
+                    if (work == userDatabase.work.workedWith) {
+
+                        embedReject.setDescription(`> ${client.emoji.error} That's already your job.`)
+
+                        i.update({
+                            content: [``],
+                            components: [],
+                            embeds: [embedReject]
+                        });
+                    }
+
+                    embedConfirm.setDescription(`> ${client.emoji.check} Congratulations! You now work as a ${workName}`)
 
                     i.update({
-                        content: `> Congratulations! You now work as a ${workName}`,
+                        content: [``],
                         components: [],
-                        embeds: []
+                        embeds: [embedConfirm]
                     });
 
                     await client.userDB.updateOne({
@@ -156,9 +169,12 @@ module.exports = {
                         }
                     });
                 } else {
+
+                    embedReject.setDescription(`> ${client.emoji.error} You recently changed your job, you can change again <t:${Math.floor(userDatabase.cooldowns.changeJob / 1000)}:R>`)
+
                     return i.update({
-                        content: `> ${client.emoji.error} You recently changed your job, you can change again <t:${Math.floor(userDatabase.cooldowns.changeJob / 1000)}:R>`,
-                        embeds: [],
+                        content: [``],
+                        embeds: [embedReject],
                         components: [],
                     })
                 }
