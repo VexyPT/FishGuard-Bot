@@ -1,4 +1,5 @@
 const { ApplicationCommandType, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const ms = require("ms");
 
 module.exports = {
   name: "jobs",
@@ -74,16 +75,11 @@ module.exports = {
         collector.on("collect", async i => {
             if (i.isStringSelectMenu()) {
 
-                const convertCooldownToTimestamp = (milliseconds) => {
-                    const seconds = Math.floor(milliseconds / 1000);
-                    return `<t:${seconds}:R>`;
-                };
-                
                 const embedJob = new EmbedBuilder()
                 .setTitle(`${jobs[work].name} ${jobs[work].emoji}`)
                 .addFields(
                     { name: `> **Description:**`, value: `\`${jobs[work].description}\``},
-                    { name: `> **Cooldown:**`, value: `\`${convertCooldownToTimestamp(jobs[work].cooldown)}\``},
+                    { name: `> **Cooldown:**`, value: `\`${ms(jobs[work].cooldown)}\``},
                     { name: `> **Max Salary:**`, value: `${jobs[work].maxMoney + 500}`}
                 )
 
@@ -92,7 +88,7 @@ module.exports = {
                 const button = new ActionRowBuilder().addComponents(
                     new ButtonBuilder()
                     .setCustomId(`accept_${work}`)
-                    .setEmoji(jobs[work].emoji)
+                    .setEmoji("✅")
                     .setLabel("Accept Job")
                     .setStyle(ButtonStyle.Secondary)
                 );                
