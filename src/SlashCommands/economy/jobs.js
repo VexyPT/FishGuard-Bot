@@ -107,9 +107,9 @@ module.exports = {
                     content: `> Bro, that's already your job, wake up!`
                 });
 
-                i.updaate({
-                    content: `> Congratulations! You now work as a ${work.name}`,
-                    components: []
+                i.update({
+                    content: `> Congratulations! You now work as a ${jobs[work].name} ${jobs[work].emoji}`,
+                    components: [],
                 });
 
                 await client.userDB.updateOne({
@@ -127,7 +127,7 @@ module.exports = {
 
             }
 
-            if (jobs) {}
+            //if () {}
         })
     })
 
