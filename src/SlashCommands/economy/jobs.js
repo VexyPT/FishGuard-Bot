@@ -19,35 +19,42 @@ module.exports = {
             emoji: "🗑️",
             cooldown: 1000 * 60 * 45,
             description: "Collect trash from the streets",
-            maxMoney:  800
+            maxMoney:  300
         },
         fisherman: {
             name: "Fisherman",
             emoji: "🎣",
             cooldown: 1000 * 60 * 540,
             description: "Go fish with your dad (if you have one)",
-            maxMoney: 1600
+            maxMoney: 1100
         },
         sedexDelivery: {
             name: "Sedex Delivery",
             emoji: "📦",
             cooldown: 1000 * 60 * 420,
             description: "Deliver packages",
-            maxMoney: 2000
+            maxMoney: 1500
         },
         truckDriver: {
             name: "Truck Driver",
             emoji: "🚚",
             cooldown: 1000 * 60 * 300,
             description: "Drive and drive for hours to deliver some chicken feed to companies",
-            maxMoney: 2500
+            maxMoney: 2000
         },
         gameDeveloper: {
             name: "Game Developer",
             emoji: "👾",
             cooldown: 1000 * 60 * 600,
             description: "Make games with GDScript, or bugs, you choose",
-            maxMoney: 7000
+            maxMoney: 6500
+        },
+        pizzaDelivery: {
+            name: "Pizza Delivery",
+            emoji: "🍕",
+            cooldown: 1000 * 60 * 45,
+            description: "Domino's pizza delevery guy",
+            maxMoney: 500
         }
     };
 
@@ -113,7 +120,8 @@ module.exports = {
                     fisherman: "Fisherman",
                     sedexDelivery: "Sedex Delivery",
                     truckDriver: "Truck Driver",
-                    gameDeveloper: "Game Developer"
+                    gameDeveloper: "Game Developer",
+                    pizzaDelivery: "Pizza Delivery"
                 }
 
                 const workName = workMappings[work] || work;
