@@ -1,36 +1,11 @@
-const { Client, Collection, Partials, GatewayIntentBits, WebhookClient, EmbedBuilder } = require("discord.js");
-const handler = require("./src/handler/index.js");
+const { Client, Collection, Partials, GatewayIntentBits, WebhookClient, EmbedBuilder } = require('discord.js');
+const handler = require('./src/handler/index.js');
 const fs = require("fs");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+
 const client = new Client({
-        allowedMentions: {
-            parse: ['users', 'roles'],
-            repliedUser: false
-        },
-        intents: [
-            GatewayIntentBits.Guilds,
-            GatewayIntentBits.GuildMembers,
-            GatewayIntentBits.GuildModeration,
-            GatewayIntentBits.GuildEmojisAndStickers,
-            GatewayIntentBits.GuildIntegrations,
-            GatewayIntentBits.GuildWebhooks,
-            GatewayIntentBits.GuildInvites,
-            GatewayIntentBits.GuildVoiceStates,
-            GatewayIntentBits.GuildPresences,
-            GatewayIntentBits.GuildMessages,
-            GatewayIntentBits.GuildMessageReactions,
-            GatewayIntentBits.GuildMessageTyping,
-            GatewayIntentBits.DirectMessages,
-            GatewayIntentBits.DirectMessageReactions,
-            GatewayIntentBits.DirectMessageTyping,
-            GatewayIntentBits.MessageContent,
-        ],
-        partials: [
-            Partials.Channel,
-            Partials.Message,
-            Partials.Reaction,
-        ],
+  intents: [ GatewayIntentBits.Guilds ]
 });
 
 module.exports = client;
@@ -61,7 +36,7 @@ client.on('interactionCreate', async (interaction) => {
   });
 
   let logMessage = new EmbedBuilder()
-  .setColor("Grey")
+  .setColor(client.color.default)
   .setTitle("🛡️ Comando executado")
   .setDescription(`> 🛰️ **Nome do comando:** \`${interaction.commandName}\`
   > 👤 **Executado por:** \`${interaction.user.tag}\` - \`${interaction.user.id}\`
