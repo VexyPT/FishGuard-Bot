@@ -31,14 +31,14 @@ module.exports = {
         }
       });
 
-      embedConfirm.setDescription(`> You have successfully redeemed your daily reward and received ${Amount} ${client.emoji.coin}`)
+      embedConfirm.setDescription(`> You have successfully redeemed your daily reward and received ${Amount} ${client.emoji.coin}`);
 
       await interaction.reply({
         embeds: [embedConfirm]
       });
     } else {
 
-      embedReject.setDescription(`> You still can't redeem your daily reward,back in <t:${Math.floor(userDatabase.cooldowns.daily / 1000)}:R>`)
+      embedReject.setDescription(`> You still can't redeem your daily reward, back in <t:${Math.floor(userDatabase.cooldowns.daily / 1000)}:R>`);
 
       await interaction.reply({
         embeds: [embedReject],

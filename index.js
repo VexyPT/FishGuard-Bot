@@ -10,7 +10,6 @@ const client = new Client({
 
 module.exports = client;
 
-client.mongodbToken = require('./settings/mongodb.json');
 client.color = require('./settings/colors.json');
 client.emoji = require('./settings/emojis.json');
 client.webhook = require('./settings/webhooks.json');
@@ -75,5 +74,5 @@ process.on("unhandledRejection", (reason, promise) => {
 client.login(process.env.clientToken);
 
 // Connect to MongoDB Database
-mongoose.connect(client.mongodbToken.token)
-  .then(() => { console.log("MongoDB - Database Connected") })
+mongoose.connect(process.env.mongoDB)
+    .then(() => { console.log("MongoDB - Database Connected") });
