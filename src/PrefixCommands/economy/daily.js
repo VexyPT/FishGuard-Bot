@@ -38,8 +38,7 @@ module.exports = {
           embedReject.setDescription(`> You still can't redeem your daily reward, back in <t:${Math.floor(userDatabase.cooldowns.daily / 1000)}:R>`);
 
           await message.reply({
-              embeds: [embedReject],
-              ephemeral: true
+              embeds: [embedReject]
           });
       }
 
