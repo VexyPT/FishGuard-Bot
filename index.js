@@ -21,6 +21,23 @@ handler.loadEvents(client);
 handler.loadCommands(client);
 handler.loadSlashCommands(client);
 
+// Check if the .env.development file exists
+let tokenFile = ".env";
+if (fs.existsSync('.env.development')) {
+  tokenFile = '.env.development';
+}
+
+// Loads the environment variables from the corresponding .env file
+const result = dotenv.config({
+  path: tokenFile
+});
+
+// Checks if there was an error loading the environment variables
+if (result.error) {
+  console.error("Error loading environment variables:", result.error);
+  process.exit(1);
+}
+
 // Webhook command logs
 const webhookUrl = process.env.commandLogs;
 const webhookClient = new WebhookClient({ url: webhookUrl });
@@ -43,23 +60,6 @@ client.on('interactionCreate', async (interaction) => {
 
   webhookClient.send({ embeds: [logMessage] });
 });
-
-// Check if the .env.development file exists
-let tokenFile = ".env";
-if (fs.existsSync('.env.development')) {
-  tokenFile = '.env.development';
-}
-
-// Loads the environment variables from the corresponding .env file
-const result = dotenv.config({
-  path: tokenFile
-});
-
-// Checks if there was an error loading the environment variables
-if (result.error) {
-  console.error("Erro ao carregar as variáveis de ambiente: ", result.error);
-  process.exit(1);
-}
 
 // Adds event listeners for error handling
 process.on("uncaughtException", (err) => {
