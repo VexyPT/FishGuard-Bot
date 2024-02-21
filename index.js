@@ -12,7 +12,6 @@ module.exports = client;
 
 client.color = require('./settings/colors.json');
 client.emoji = require('./settings/emojis.json');
-client.webhook = require('./settings/webhooks.json');
 client.userDB = require('./src/Schemas/User.js');
 client.commands = new Collection();
 client.slash = new Collection();
@@ -23,7 +22,7 @@ handler.loadCommands(client);
 handler.loadSlashCommands(client);
 
 // Webhook command logs
-const webhookUrl = client.webhook.commandLogs;
+const webhookUrl = process.env.commandLogs;
 const webhookClient = new WebhookClient({ url: webhookUrl });
 
 client.on('interactionCreate', async (interaction) => {
