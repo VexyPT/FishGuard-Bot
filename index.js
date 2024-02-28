@@ -1,11 +1,16 @@
-const { Client, Collection, Partials, GatewayIntentBits, WebhookClient, EmbedBuilder } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, WebhookClient, EmbedBuilder } = require('discord.js');
 const handler = require('./src/handler/index.js');
 const fs = require("fs");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
 const client = new Client({
-  intents: [ GatewayIntentBits.Guilds ]
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildEmojisAndStickers,
+    GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.MessageContent
+  ]
 });
 
 module.exports = client;
@@ -62,12 +67,12 @@ client.on('interactionCreate', async (interaction) => {
 });
 
 // Adds event listeners for error handling
-process.on("uncaughtException", (err) => {
+/*process.on("uncaughtException", (err) => {
 	console.log("Error: Uncaught Exception:\n" + err);
 });
 process.on("unhandledRejection", (reason, promise) => {
     console.log("Error: unhandledRejection:\n" + reason.message);
-});
+});*/
 
 // Login with token loaded
 client.login(process.env.clientToken);
