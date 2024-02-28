@@ -1,3 +1,5 @@
+const { EmbedBuilder } = require("discord.js");
+
 module.exports = {
   name: "daily",
   description: "Claim your daily reward",

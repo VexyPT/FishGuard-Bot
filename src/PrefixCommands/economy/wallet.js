@@ -1,5 +1,7 @@
+const { EmbedBuilder } = require("discord.js");
+
 module.exports = {
-  name: "bank",
+  name: "wallet",
   description: "See how much money you have",
   run: async(client, message) => {
 
