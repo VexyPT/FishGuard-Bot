@@ -1,35 +1,19 @@
-const { ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "pay",
     description: "Send money to another user",
-    type: ApplicationCommandType.ChatInput,
-    options: [
-        {
-            name: "user",
-            description: "The user who will recive the money",
-            type: ApplicationCommandOptionType.User,
-            required: true
-        },
-        {
-            name: "amount",
-            description: "The money ammount that you wanna send",
-            type: ApplicationCommandOptionType.Number,
-            min_value: 1,
-            required: true
-        }
-    ],
-    run: async(client, interaction) => {
+    run: async(client, message) => {
 
-        const sendUser = await client.userDB.findOne({ _id: interaction.user.id })
-         || await client.userDB.create({ _id: interaction.user.id });
+        const sendUser = await client.userDB.findOne({ _id: message.author.id })
+         || await client.userDB.create({ _id: message.author.id });
 
-        const reciveUserMention = interaction.options.getUser("user");
+        const reciveUserMention = // args 1
 
         const reciveUser = await client.userDB.findOne({ _id: reciveUserMention.id })
          || await client.userDB.create({ _id: reciveUserMention.id });
 
-        const moneyAmount = interaction.options.getNumber("amount");
+        const moneyAmount = // args 2
 
         const embedConfirm = new EmbedBuilder()
         .setColor(`${client.color.green}`);
@@ -41,9 +25,8 @@ module.exports = {
 
             embedReject.setDescription(`> Sorry! you can't send money to yourself`)
 
-            return interaction.reply({
-                embeds: [embedReject],
-                ephemeral: true
+            return message.reply({
+                embeds: [embedReject]
             });
         }
 
@@ -51,13 +34,12 @@ module.exports = {
 
             embedReject.setDescription(`> You don't have enough money to complete this transaction, you need another ${moneyAmount - sendUser.money} ${client.emoji.coin}`)
 
-            return interaction.reply({
-                embeds: [embedReject],
-                ephemeral: true
+            return message.reply({
+                embeds: [embedReject]
             });
         }
 
-        await client.userDB.updateOne({ _id: interaction.user.id }, {
+        await client.userDB.updateOne({ _id: message.author.id }, {
             $inc: {
                 money: - moneyAmount
             }
@@ -71,7 +53,7 @@ module.exports = {
 
         embedConfirm.setDescription(`> You have successfully sent ${moneyAmount} ${client.emoji.coin} to ${reciveUserMention}`)
 
-        await interaction.reply({
+        await message.reply({
             embeds: [embedConfirm]
         });
 

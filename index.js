@@ -1,4 +1,4 @@
-const { Client, Collection, GatewayIntentBits, WebhookClient, EmbedBuilder } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, WebhookClient, EmbedBuilder, Partials } = require('discord.js');
 const handler = require('./src/handler/index.js');
 const fs = require("fs");
 const dotenv = require("dotenv");
