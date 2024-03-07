@@ -76,7 +76,7 @@ module.exports = {
                     await sendMessage(`⚠️ There is no public release notes yet...`);
                 } else {
                     var string = ``;
-                    await data.forEach(async value => {
+                    data.forEach(async value => {
                         string += `\`${value.Version}\` \n\n**Update Information:**\n\`\`\`${value.Updates}\`\`\`\n\n**Updating Developer:** ${value.Developer}\n**Update Date:** <t:${Math.floor(value.Date / 1000)}:R>`;
                     });
 
