@@ -2,16 +2,9 @@ const { Schema, model } = require("mongoose");
 
 const userSet = new Schema({
   _id: { type: String },
-  money: { type: Number, default: 0 },
+  coins: { type: Number, default: 0 },
   cooldowns: {
     daily: { type: String , default: 0 },
-    work: { type: String },
-    changeJob: { type: String, default: 0 }
-  },
-  work: {
-    workedWith: { type: String },
-    maxMoney: { type: Number },
-    jobCooldown: { type: Number }
   }
 });
 
