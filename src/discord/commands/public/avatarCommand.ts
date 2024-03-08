@@ -5,7 +5,7 @@ import { ApplicationCommandOptionType, ApplicationCommandType, EmbedBuilder, But
 
 new Command({
     name: "avatar",
-    description: "[DISCORD] Mostra o avatar do seu perfil ou o avatar do perfil de outro usuário",
+    description: "「Discord」 Mostra o avatar do seu perfil ou o avatar do perfil de outro usuário",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
     options: [

@@ -5,9 +5,9 @@ import { ApplicationCommandType, ApplicationCommandOptionType, PermissionFlagsBi
 
 new Command({
     name: "clear",
-    description: "[Manage] Delete some messages",
+    description: "「Moderação」 Delete an amount of messages from a user or channel",
     descriptionLocalizations: {
-        "pt-BR": "[Manage] Apague algumas mensagens"
+        "pt-BR": "「Moderação」 Delete uma quantia de mensagens de algum usuário ou canal"
     },
     dmPermission: false,
     defaultMemberPermissions: ["ManageMessages"],

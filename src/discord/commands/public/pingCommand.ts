@@ -3,9 +3,9 @@ import { ApplicationCommandType } from "discord.js";
 
 new Command({
 	name: "ping",
-	description: "Check Kiara's latency",
+	description: "「Bot」 Check Kiara's latency",
 	descriptionLocalizations: {
-		"pt-BR": "Cheque a latência da Kiara"
+		"pt-BR": "「Bot」 Cheque a latência da Kiara"
 	},
 	dmPermission: false,
 	type: ApplicationCommandType.ChatInput,
