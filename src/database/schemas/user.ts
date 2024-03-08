@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 import { t } from "../utils.js";
 
-export const memberSchema = new Schema(
+export const userSchema = new Schema(
     {
         id: t.string,
         wallet: {

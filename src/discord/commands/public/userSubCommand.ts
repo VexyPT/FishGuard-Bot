@@ -6,6 +6,7 @@ import {
 import { settings } from "#settings";
 import { createRow, hexToRgb } from "@magicyan/discord";
 import axios from "axios";
+import { db } from "#database";
 
 new Command({
     name: "user",
@@ -18,7 +19,7 @@ new Command({
     options: [
         {
             name: "avatar",
-            description: "See a user's avatar",
+            description: "「Discord」 See a user's avatar",
             descriptionLocalizations: {
                 "pt-BR": "「Discord」 Mostra o avatar do seu perfil ou o avatar do perfil de outro usuário"
             },
@@ -81,7 +82,32 @@ new Command({
                     required: false
                 }
             ]
-        }
+        },
+        {
+            name: "profile",
+            nameLocalizations: {
+                "pt-BR": "perfil"
+            },
+            description: "「Eeconomia」 Show a user's profile",
+            descriptionLocalizations: {
+                "pt-BR": "「Economia」 Veja o perfil de um usuário"
+            },
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: "user",
+                    nameLocalizations: {
+                        "pt-BR": "user"
+                    },
+                    description: "Mention or ID",
+                    descriptionLocalizations: {
+                        "pt-BR": "Menção ou ID do membro"
+                    },
+                    type: ApplicationCommandOptionType.User,
+                    required: false
+                }
+            ]
+        },
     ],
     async run(interaction){
         const { client, options, guild } = interaction;
@@ -251,6 +277,56 @@ new Command({
                     });
 
                 });
+
+                break;
+            } // fim do /user info
+
+            case "profile": {
+
+                const user = options.getUser("user") || interaction.user;
+                const userDatabase = db.users.get(user.id);
+                const badges = (await userDatabase).badges.join(" ");
+                const coins = (await userDatabase).wallet?.coins;
+
+                axios.get(`https://discord.com/api/users/${user.id}`, {
+                    headers: {
+                        Authorization: `Bot ${client.token}`,                    },
+                }).then((res) => {
+
+                    const { banner } = res.data;
+
+                    const embedInfo = new EmbedBuilder({
+                        thumbnail: { url: user.displayAvatarURL({ size: 1024 })},
+                        color: hexToRgb(settings.colors.azoxo)
+                    });
+
+                    if (banner) {
+                        const extension = banner.startsWith("a_") ? ".gif?size=4096" : ".png?size=4096";
+                        const url = `https://cdn.discordapp.com/banners/${user.id}/${banner}${extension}`;
+                        embedInfo.setImage(url);
+                    }
+
+                    if (badges) {
+                        embedInfo.setAuthor({ name: `${user.globalName}`, iconURL: `${user.displayAvatarURL()}` });
+                        embedInfo.addFields(
+                            { name: `${formatEmoji(settings.emojis.static.dot)} Badges`, value: `${badges}`, inline: false },
+                        );
+                    } else {
+                        embedInfo.setAuthor({ name: `${user.globalName}`, iconURL: `${user.displayAvatarURL()}` });
+                    }
+
+                    embedInfo.addFields(
+                        { name: `${formatEmoji(settings.emojis.static.user)} Nome`, value: codeBlock(`${user.username}`), inline: true },
+                        { name: `${formatEmoji(settings.emojis.static.info)} Identidade`, value: codeBlock(`${user.id}`), inline: true },
+                        { name: `${formatEmoji(settings.emojis.static.economy.wallet)} KiaraCoins`, value: `${coins} ${formatEmoji(settings.emojis.static.economy.coins)}`, inline: true },
+                    );
+
+                    interaction.reply({
+                        embeds: [embedInfo]
+                    });
+
+                });
+
 
                 break;
             }

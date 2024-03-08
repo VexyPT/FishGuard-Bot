@@ -1,6 +1,6 @@
 import mongoose, { InferSchemaType, model } from "mongoose";
 import { guildSchema } from "./schemas/guild.js";
-import { memberSchema } from "./schemas/member.js";
+import { userSchema } from "./schemas/user.js";
 import { log } from "#settings";
 import chalk from "chalk";
 
@@ -15,8 +15,8 @@ mongoose.connect(process.env.MONGO_URI)
 
 export const db = {
    guilds: model("guild", guildSchema, "guilds"),
-   members: model("member", memberSchema, "members")
+   users: model("user", userSchema, "users")
 };
 
 export type GuildSchema = InferSchemaType<typeof guildSchema>;
-export type MemberSchema = InferSchemaType<typeof memberSchema>;
+export type UserSchema = InferSchemaType<typeof userSchema>;
