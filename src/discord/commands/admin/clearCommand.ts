@@ -7,7 +7,7 @@ new Command({
     name: "clear",
     description: "「Moderação」 Delete an amount of messages from a user or channel",
     descriptionLocalizations: {
-        "pt-BR": "「Moderação」 Delete uma quantia de mensagens de algum usuário ou canal"
+        "pt-BR": "「Moderation」 Delete uma quantia de mensagens de algum usuário ou canal"
     },
     dmPermission: false,
     defaultMemberPermissions: ["ManageMessages"],

@@ -1,7 +1,7 @@
 import { Command } from "#base";
 import { settings } from "#settings";
 import { createRow, hexToRgb } from "@magicyan/discord";
-import { ApplicationCommandOptionType, ApplicationCommandType, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, ButtonBuilder, ButtonStyle, EmbedBuilder, formatEmoji } from "discord.js";
 
 new Command({
     name: "developer",
@@ -32,6 +32,13 @@ new Command({
     async run(interaction){
 
         const { options } = interaction;
+
+        if (interaction.user.id != "435877436459188234") {
+            interaction.reply({
+                content: `${formatEmoji(settings.emojis.static.error)} Esse comando é apenas para o meu desenvolvedor!`
+            });
+            return;
+        }
         
         switch (options.getSubcommand()) {
             case "manage-user": {

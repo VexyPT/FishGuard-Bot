@@ -29,9 +29,9 @@ new Command({
     nameLocalizations: {
         "pt-BR": "criar-embed"
     },
-    description: "Create a custom embned",
+    description: "「Moderation」 Create a custom embned",
     descriptionLocalizations: {
-        "pt-BR": "Crie uma embed personalizada"
+        "pt-BR": "「Moderação」 Crie uma embed personalizada"
     },
     dmPermission: false,
     defaultMemberPermissions: ["ManageMessages"],
@@ -42,9 +42,9 @@ new Command({
             nameLocalizations: {
                 "pt-BR": "canal",
             },
-            description: "Channel where the announcement will be sent",
+            description: "Channel where the embed will be sent",
             descriptionLocalizations: {
-                "pt-BR": "Canal onde o anúncio será enviado",
+                "pt-BR": "Canal onde a embed será enviada",
             },
             type: ApplicationCommandOptionType.Channel,
             channelTypes: [ChannelType.GuildText,ChannelType.GuildAnnouncement],
@@ -66,6 +66,7 @@ new Command({
                 { name: "Blue", nameLocalizations: { "pt-BR": "Azul" }, value: "#3b82f6" },
                 { name: "Red", nameLocalizations: { "pt-BR": "Vermelho" }, value: "#ef4444" },
                 { name: "Invisible", nameLocalizations: { "pt-BR": "Invisível" }, value: "#2F3136" },
+                { name: "Blurple", nameLocalizations: { "pt-BR": "Blurple" }, value: `${settings.colors.azoxo}` }
             ],
             required: true
         },
