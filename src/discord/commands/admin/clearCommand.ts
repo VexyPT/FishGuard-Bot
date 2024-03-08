@@ -94,7 +94,7 @@ new Command({
             channel.bulkDelete(filtered.first(Math.min(amount, 100)))
                 .then(cleared => interaction.editReply({
                     content: cleared.size
-                        ? `${formatEmoji(settings.emojis.static.check)} ${cleared.size} mensagens de ${mention} deletadas com sucesso!`
+                        ? `${formatEmoji(settings.emojis.static.check)} \`${cleared.size}\` mensagens de ${mention} deletadas com sucesso!`
                         : `${formatEmoji(settings.emojis.static.error)} Não há mensagens de ${mention} para serem deletadas!`,
                 }))
                 .catch((err) => interaction.editReply({
@@ -106,7 +106,7 @@ new Command({
         channel.bulkDelete(Math.min(amount, 100))
             .then(cleared => interaction.editReply({
                 content: cleared.size
-                    ? `${formatEmoji(settings.emojis.static.check)} ${cleared.size} mensagens deletadas com sucesso!`
+                    ? `${formatEmoji(settings.emojis.static.check)} \`${cleared.size}\` mensagens deletadas com sucesso!`
                     : `${formatEmoji(settings.emojis.static.error)} Não há mensagens para serem deletadas!`,
             }))
             .catch((err) => interaction.editReply({
