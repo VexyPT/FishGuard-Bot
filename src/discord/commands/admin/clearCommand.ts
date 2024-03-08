@@ -61,17 +61,17 @@ new Command({
 
         if (!channel?.permissionsFor(user)?.has(PermissionFlagsBits.ManageMessages)) {
             interaction.editReply({
-                content: `${formatEmoji(settings.emojis.static.wrong)} Você não tem permissão para usar este comando! Para utilizá-lo, você precisa ter permissão para \`Gerenciar Mensagens\`!`
+                content: `${formatEmoji(settings.emojis.static.error)} Você não tem permissão para usar este comando! Para utilizá-lo, você precisa ter permissão para \`Gerenciar Mensagens\`!`
             });
             return;
         }
 
         if (!channel?.isTextBased()) {
-            interaction.editReply({ content: `${formatEmoji(settings.emojis.static.wrong)} Não é possível utilizar este comando nesse canal!` });
+            interaction.editReply({ content: `${formatEmoji(settings.emojis.static.error)} Não é possível utilizar este comando nesse canal!` });
             return;
         }
 
-        await interaction.deferReply({ ephemeral });
+        await interaction.deferReply({ ephemeral: true });
 
         const amount = options.getInteger("quantidade") || 1;
         const mention = options.getMember("autor");
@@ -80,10 +80,10 @@ new Command({
         if (messageId) {
             channel.messages.delete(messageId)
                 .then(() => interaction.editReply({
-                    content: `${formatEmoji(settings.emojis.static.wrong)} A mensagem foi deletada com sucesso`
+                    content: `${formatEmoji(settings.emojis.static.check)} A mensagem foi deletada com sucesso`
                 }))
                 .catch((err) => interaction.editReply({
-                    content: brBuilder(`${formatEmoji(settings.emojis.static.wrong)} Não foi possível deletar a mensagem`, codeBlock("ts", err))
+                    content: brBuilder(`${formatEmoji(settings.emojis.static.error)} Não foi possível deletar a mensagem`, codeBlock("ts", err))
                 }));
             return;
         }
@@ -94,8 +94,8 @@ new Command({
             channel.bulkDelete(filtered.first(Math.min(amount, 100)))
                 .then(cleared => interaction.editReply({
                     content: cleared.size
-                        ? `${cleared.size} mensagens de ${mention} deletadas com sucesso!`
-                        : `Não há mensagens de ${mention} para serem deletadas!`,
+                        ? `${formatEmoji(settings.emojis.static.check)} ${cleared.size} mensagens de ${mention} deletadas com sucesso!`
+                        : `${formatEmoji(settings.emojis.static.error)} Não há mensagens de ${mention} para serem deletadas!`,
                 }))
                 .catch((err) => interaction.editReply({
                     content: brBuilder("Não foi possível deletar mensagens!", codeBlock("ts", err))
@@ -106,11 +106,11 @@ new Command({
         channel.bulkDelete(Math.min(amount, 100))
             .then(cleared => interaction.editReply({
                 content: cleared.size
-                    ? `${cleared.size} mensagens deletadas com sucesso!`
-                    : "Não há mensagens para serem deletadas!",
+                    ? `${formatEmoji(settings.emojis.static.check)} ${cleared.size} mensagens deletadas com sucesso!`
+                    : `${formatEmoji(settings.emojis.static.error)} Não há mensagens para serem deletadas!`,
             }))
             .catch((err) => interaction.editReply({
-                content: brBuilder("Não foi possível deletar mensagens!", codeBlock("ts", err))
+                content: brBuilder(`${formatEmoji(settings.emojis.static.error)} Não foi possível deletar mensagens!`, codeBlock("ts", err))
             }));
 
     }
