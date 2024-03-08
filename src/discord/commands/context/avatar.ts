@@ -4,7 +4,7 @@ import { settings } from "#settings";
 import { createRow, hexToRgb } from "@magicyan/discord";
 
 new Command({
-    name: "avatar",
+    name: "Ver avatar",
     dmPermission: false,
     type: ApplicationCommandType.User,
     async run(interaction) {

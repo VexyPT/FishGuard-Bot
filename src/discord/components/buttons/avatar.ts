@@ -70,6 +70,7 @@ new Component({
                     new ButtonBuilder({
                         url: `${targetMember.displayAvatarURL({ size: 1024 })}`,
                         label: "Download",
+                        emoji: `${formatEmoji(settings.emojis.static.touch)}`,
                         style: ButtonStyle.Link
                     })
                 );
