@@ -125,7 +125,7 @@ new Command({
             
             case "banner": {
 
-                const user = options.getUser("usuario") || interaction.user;
+                const user = options.getUser("user") || interaction.user;
 
                 axios.get(`https://discord.com/api/users/${user.id}`, {
                     headers: {
