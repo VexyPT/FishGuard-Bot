@@ -126,14 +126,15 @@ new Component({
         switch(action){
             case "chooseBadge": {
 
-                badges.push(values);
+                badges.length = 0;
+                badges.push(...values);
 
                 const updatedUser = await userDatabase;
                 updatedUser.badges = badges;
 
                 await updatedUser.save();
 
-                await interaction.channel!.send({ content: "Badges setadas com sucesso", embeds: [], components: [] });
+                await interaction.reply({ content: "Badges setadas com sucesso", embeds: [], components: [], ephemeral });
 
                 break;
             }
