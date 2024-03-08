@@ -1,15 +1,15 @@
 import { Schema } from "mongoose";
 import { t } from "../utils.js";
 
-const channelInfo = { id: t.string, url: t.string };
+//const channelInfo = { id: t.string, url: t.string };
 
 export const guildSchema = new Schema(
     {
         id: t.string,
-        channels: {
+        /*channels: {
             logs: channelInfo,
             general: channelInfo,
-        }
+        }*/
     },
     {
         statics: {

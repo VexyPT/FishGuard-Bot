@@ -10,7 +10,7 @@ import axios from "axios";
 new Command({
     name: "user",
     nameLocalizations: {
-        "pt-BR": "usuário"
+        "pt-BR": "user"
     },
     description: "gerencia o modulo de user",
     dmPermission: false,
