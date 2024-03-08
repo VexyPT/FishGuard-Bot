@@ -1,7 +1,7 @@
 import { Command } from "#base";
 import { settings } from "#settings";
-import { hexToRgb } from "@magicyan/discord";
-import { ApplicationCommandOptionType, ApplicationCommandType, EmbedBuilder } from "discord.js";
+import { createRow, hexToRgb } from "@magicyan/discord";
+import { ApplicationCommandOptionType, ApplicationCommandType, EmbedBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 
 new Command({
     name: "avatar",
@@ -23,12 +23,31 @@ new Command({
         const user = options.getUser("usuario") || interaction.user;
 
         const embedAvatar = new EmbedBuilder({
-            author: { name: user.displayName, url: user.displayAvatarURL() },
+            title: "Avatar do Servidor",
+            author: { name: `${user.displayName}`, iconURL: user.displayAvatarURL() },
             image: { url: user.displayAvatarURL({ size: 1024 }) },
             color: hexToRgb(settings.colors.azoxo)
         });
 
-        await interaction.reply({ embeds: [embedAvatar] });
+        const row = createRow(
+            new ButtonBuilder({
+                customId: `avatar/user/${user.id}/global`,
+                label: "Avatar Global",
+                style: ButtonStyle.Secondary
+            }),
+            new ButtonBuilder({
+                customId: `avatar/user/${user.id}/server`,
+                label: "Avatar do Servidor",
+                style: ButtonStyle.Primary
+            }),
+            new ButtonBuilder({
+                url: `${user.displayAvatarURL()}`,
+                label: "Download",
+                style: ButtonStyle.Link
+            })
+        );
+
+        await interaction.reply({ embeds: [embedAvatar], components: [row] });
 
     }
 });
