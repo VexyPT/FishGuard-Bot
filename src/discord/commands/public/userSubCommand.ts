@@ -178,16 +178,16 @@ new Command({
                     "Staff": `${formatEmoji(settings.emojis.static.badges.staff)}`,
                     "Partner": `${formatEmoji(settings.emojis.static.badges.partner)}`,
                     "CertifiedModerator": `${formatEmoji(settings.emojis.static.badges.moderator)}`,
-                    "Hypesquad": "",
-                    "HypeSquadOnlineHouse1": "",
-                    "HypeSquadOnlineHouse2": "",
-                    "HypeSquadOnlineHouse3": "",
-                    "BugHunterLevel1": `${formatEmoji(settings.emojis.static.badges.bugHunter)}`,
-                    "BugHunterLevel2": `${formatEmoji(settings.emojis.static.badges.goldBugHunter)}`,
-                    "ActiveDeveloper": "",
-                    "VerifiedDeveloper": `${formatEmoji(settings.emojis.static.badges.earlyDeveloper)}`,
+                    "Hypesquad": `${formatEmoji(settings.emojis.static.badges.hypeSquadEvents)}`,
+                    "HypeSquadOnlineHouse1": `${formatEmoji(settings.emojis.static.badges.hypeSquadBravery)}`,
+                    "HypeSquadOnlineHouse2": `${formatEmoji(settings.emojis.static.badges.hypeSquadBalance)}`,
+                    "HypeSquadOnlineHouse3": `${formatEmoji(settings.emojis.static.badges.hypeSquadBravery)}`,
+                    "BugHunterLevel1": `${formatEmoji(settings.emojis.static.badges.bugHunter1)}`,
+                    "BugHunterLevel2": `${formatEmoji(settings.emojis.static.badges.bugHunter2)}`,
+                    "ActiveDeveloper": `${formatEmoji(settings.emojis.static.badges.activeDeveloper)}`,
+                    "VerifiedDeveloper": `${formatEmoji(settings.emojis.static.badges.verifiedBotDeveloper)}`,
                     "PremiumEarlySupporter": `${formatEmoji(settings.emojis.static.badges.earlySupporter)}`,
-                    "VerifiedBot": "",
+                    //"VerifiedBot": "",
                 };
 
                 let badge: string[] = [];
@@ -198,7 +198,7 @@ new Command({
                         .map(flag => flag2[flag as keyof typeof flag2]);
                 }
 
-                const badges = badge.join("");
+                const badges = badge.join(" ");
 
                 axios.get(`https://discord.com/api/users/${user.id}`, {
                     headers: {
@@ -213,6 +213,12 @@ new Command({
                         thumbnail: { url: user.displayAvatarURL({ size: 1024 })},
                         color: hexToRgb(settings.colors.azoxo)
                     });
+
+                    if (banner) {
+                        const extension = banner.startsWith("a_") ? ".gif?size=4096" : ".png?size=4096";
+                        const url = `https://cdn.discordapp.com/banners/${user.id}/${banner}${extension}`;
+                        embedInfo.setImage(url);
+                    }
 
                     if (badges?.length! > 255) {
                         embedInfo.setAuthor({ name: `${user.globalName}`, iconURL: `${user.displayAvatarURL()}` });
@@ -229,12 +235,6 @@ new Command({
                         { name: `${formatEmoji(settings.emojis.static.mention)} Menção`, value: `${user}`, inline: true },
                         { name: `${formatEmoji(settings.emojis.static.calendar)} Criou a conta em:`, value: `${time(createdAt!, "f")} (${time(createdAt!, "R")})`, inline: false }
                     );
-
-                    if (banner) {
-                        const extension = banner.startsWith("a_") ? ".gif?size=4096" : ".png?size=4096";
-                        const url = `https://cdn.discordapp.com/banners/${user.id}/${banner}${extension}`;
-                        embedInfo.setImage(url);
-                    }
 
                     const member = guild.members.cache.get(user.id);
                     if (member) {
