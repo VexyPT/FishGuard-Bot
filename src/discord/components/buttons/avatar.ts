@@ -1,5 +1,5 @@
 import { Component } from "#base";
-import { ComponentType, EmbedBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { ComponentType, EmbedBuilder, ButtonBuilder, ButtonStyle, formatEmoji } from "discord.js";
 import { settings } from "#settings";
 import { createRow, hexToRgb } from "@magicyan/discord";
 
@@ -36,6 +36,7 @@ new Component({
                     new ButtonBuilder({
                         url: `${targetMember.displayAvatarURL({ size: 1024 })}`,
                         label: "Download",
+                        emoji: `${formatEmoji(settings.emojis.static.touch)}`,
                         style: ButtonStyle.Link
                     })
                 );

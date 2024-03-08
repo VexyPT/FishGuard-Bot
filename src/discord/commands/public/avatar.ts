@@ -1,7 +1,7 @@
 import { Command } from "#base";
 import { settings } from "#settings";
 import { createRow, hexToRgb } from "@magicyan/discord";
-import { ApplicationCommandOptionType, ApplicationCommandType, EmbedBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, EmbedBuilder, ButtonBuilder, ButtonStyle, formatEmoji } from "discord.js";
 
 new Command({
     name: "avatar",
@@ -43,6 +43,7 @@ new Command({
             new ButtonBuilder({
                 url: `${user.displayAvatarURL()}`,
                 label: "Download",
+                emoji: `${formatEmoji(settings.emojis.static.touch)}`,
                 style: ButtonStyle.Link
             })
         );
