@@ -9,11 +9,11 @@ new Component({
     type: ComponentType.Button, cache: "cached",
     async run(interaction, params) {
 
-        const { guild } = interaction;
+        const { client } = interaction;
         const { action, userId } = params;
         const userDatabase = db.users.get(userId);
         const badges = (await userDatabase).badges;
-        const userMention = await guild.members.fetch(userId);
+        const userMention = await client.users.fetch(userId);
 
         switch(action){
             case "editBadges": {
@@ -64,7 +64,7 @@ new Component({
                     new StringSelectMenuBuilder({
                         customId: `manageDev/user/${userId}/chooseBadge`,
                         minValues: 1,
-                        maxValues: 7,
+                        maxValues: 8,
                         options: [
                             {
                                 label: "Desenvolvedor",
@@ -101,6 +101,11 @@ new Component({
                                 emoji: `${settings.emojis.static.economy.badges.premium}`,
                                 value: `${formatEmoji(settings.emojis.static.economy.badges.premium)}`,
                             },
+                            {
+                                label: "Remover Badges",
+                                emoji: `${settings.emojis.static.error}`,
+                                value: "removeBadges"
+                            }
                         ]
                     })
                 );
@@ -126,15 +131,26 @@ new Component({
         switch(action){
             case "chooseBadge": {
 
-                badges.length = 0;
-                badges.push(...values);
-
-                const updatedUser = await userDatabase;
-                updatedUser.badges = badges;
-
-                await updatedUser.save();
-
-                await interaction.reply({ content: "Badges setadas com sucesso", embeds: [], components: [], ephemeral });
+                if (values[0] === "removeBadges") {
+                    badges.splice(0, badges.length);
+        
+                    const updatedUser = await userDatabase;
+                    updatedUser.badges = badges;
+        
+                    await updatedUser.save();
+        
+                    await interaction.reply({ content: "Badges removidas com sucesso", embeds: [], components: [], ephemeral });
+                } else {
+                    badges.length = 0;
+                    badges.push(...values);
+        
+                    const updatedUser = await userDatabase;
+                    updatedUser.badges = badges;
+        
+                    await updatedUser.save();
+        
+                    await interaction.reply({ content: "Badges setadas com sucesso", embeds: [], components: [], ephemeral });
+                }
 
                 break;
             }

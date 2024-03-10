@@ -5,6 +5,9 @@ import { ApplicationCommandOptionType, ApplicationCommandType, ButtonBuilder, Bu
 
 new Command({
     name: "developer",
+    nameLocalizations: {
+        "pt-BR": "desenvolvedor"
+    },
     description: "「Developer Only」",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
