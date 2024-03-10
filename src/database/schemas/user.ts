@@ -7,7 +7,11 @@ export const userSchema = new Schema(
         wallet: {
             coins: { type: Number, default: 0 },
         },
-        badges: { type: Array, default: [] }
+        badges: { type: Array, default: [] },
+        premium: {
+            active: { type: Boolean, default: false },
+            duration: { type: String, default: 0 },
+        }
     },
     {
         statics: {

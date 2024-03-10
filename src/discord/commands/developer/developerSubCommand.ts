@@ -1,32 +1,39 @@
 import { Command } from "#base";
+import { db } from "#database";
 import { settings } from "#settings";
 import { createRow, hexToRgb } from "@magicyan/discord";
 import { ApplicationCommandOptionType, ApplicationCommandType, ButtonBuilder, ButtonStyle, EmbedBuilder, formatEmoji } from "discord.js";
 
 new Command({
     name: "developer",
-    nameLocalizations: {
-        "pt-BR": "desenvolvedor"
-    },
     description: "「Developer Only」",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
     options: [
         {
             name: "manage-user",
-            nameLocalizations: {
-                "pt-BR": "gerenciar-usuário"
-            },
             description: "「Developer Only」",
             type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
                     name: "user",
                     description: "Mention or ID",
-                    descriptionLocalizations: {
-                        "pt-BR": "Menção ou ID do membro"
-                    },
                     type: ApplicationCommandOptionType.User,
+                    required: false
+                }
+            ]
+        },
+        {
+            name: "generate-key",
+            description: "「Developer Only」",
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: "amount",
+                    description: "Amount of keys to generate",
+                    type: ApplicationCommandOptionType.Number,
+                    minValue: 1,
+                    maxValue: 10,
                     required: false
                 }
             ]
@@ -68,8 +75,44 @@ new Command({
                 });
 
                 break;
+            } // fim do /manage user
+
+            case "generate-key": {
+
+                const numberOfKeys = options.getNumber("amount") || 1;
+                const generatedKeys = [];
+
+                for (let i = 0; i < numberOfKeys; i++) {
+                    const newKey = await db.keys.create({ key: generateKey() });
+                    generatedKeys.push(newKey.key);
+                }
+
+                const embedGeneratedKeys = new EmbedBuilder({
+                    description: `Generated ${numberOfKeys} key(s): \n${generatedKeys.join("\n")}`,
+                    color: hexToRgb(settings.colors.developer),
+                });
+
+                interaction.reply({
+                    ephemeral: true,
+                    embeds: [embedGeneratedKeys],
+                });
+            
+                break;
+
             }
         }
 
     }
 });
+
+function generateKey(): string {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const keyLenght = 20;
+    let key = "";
+
+    for (let i = 0; i < keyLenght; i++) {
+        key += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    return key;
+}
