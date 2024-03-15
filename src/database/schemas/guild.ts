@@ -1,15 +1,16 @@
 import { Schema } from "mongoose";
 import { t } from "../utils.js";
 
-//const channelInfo = { id: t.string, url: t.string };
-
 export const guildSchema = new Schema(
     {
         id: t.string,
-        /*channels: {
-            logs: channelInfo,
-            general: channelInfo,
-        }*/
+        securitySystem: {
+            systemStatus: { type: Boolean, default: false },
+            channels: {
+                logs: { type: String, default: null },
+                noSecure: { type: String, default: null }
+            }
+        }
     },
     {
         statics: {
