@@ -21,8 +21,12 @@ new Event({
         const regexBlockDomainShortlinks = /(https?:\/\/(?:www\.)?(?:surl\.li|u\.to|t\.co|gclnk\.com|qptr\.ru|uclck\.ru|go-link\.ru|envs\.sh|shorter\.me|sc\.link|goo\.su))/i;
         
         if (regexBlockDomainShortlinks.test(message.content)) {
+            // Increment the count of phishing links deleted
+            await db.security.findOneAndUpdate({}, { $inc: { count: 1 } }, { new: true, upsert: true });
+
             // Delete the phishing message
             await message.delete();
+
             // Kick the user who sent the malicious link
             try {
                 const member = message.guild?.members.cache.get(message.author.id);
