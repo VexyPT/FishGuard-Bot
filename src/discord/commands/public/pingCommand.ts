@@ -3,17 +3,14 @@ import { ApplicationCommandType } from "discord.js";
 
 new Command({
 	name: "ping",
-	description: "「Bot」 Check Kiara's latency",
-	descriptionLocalizations: {
-		"pt-BR": "「Bot」 Cheque a latência da Kiara"
-	},
+	description: "「Bot」 Check the bot latency.",
 	dmPermission: false,
 	type: ApplicationCommandType.ChatInput,
 	async run(interaction){
 
 		const { client } = interaction;
 
-		await interaction.reply({ content: `🏓 Pong! ${client.ws.ping}ms` });
+		await interaction.reply({ content: `${client.ws.ping}ms` });
 
 	}
 });
