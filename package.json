@@ -1,9 +1,10 @@
 {
-  "name": "kiarabot",
+  "name": "fishguard",
   "version": "1.0.0",
   "description": "Discord Bot",
   "type": "module",
   "main": "dist/index.js",
+  "author": "vexy",
   "scripts": {
     "prestart": "npm run build",
     "build": "tsc",

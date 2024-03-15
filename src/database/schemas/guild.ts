@@ -8,7 +8,6 @@ export const guildSchema = new Schema(
             systemStatus: { type: Boolean, default: false },
             channels: {
                 logs: { type: String, default: null },
-                noSecure: { type: String, default: null }
             }
         }
     },

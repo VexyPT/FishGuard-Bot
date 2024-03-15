@@ -3,45 +3,38 @@ import { db } from "#database";
 import { ChannelType } from "discord.js";
 
 new Event({
-    name: "Anti-Scam",
+    name: "Anti Scam",
     event: "messageCreate",
     async run(message) {
-        const guildId = message.guild?.id; 
 
-        // Check if the server ID is available and if there's a record for this server in the database
+        const { client } = message;
+
+        if (message.author.id == client.user.id) return;
+        const guildId = message.guild!.id; 
         if (!guildId) return;
-        
+        console.log("Teste 1 - Passou");
         const guildData = await db.guilds.get(guildId);
-        // Check if the security system is enabled for this server
+        console.log("Teste 2 - Passou");
         if (!guildData.securitySystem?.systemStatus) return;
 
-        // Check if the message was sent in a channel where links should not be blocked
-        if (guildData.securitySystem.channels?.noSecure === message.channel.id) return;
-
-        const regexBlockDomainShortlinks = /(https?:\/\/(?:www\.)?(?:surl\.li|u\.to|t\.co|gclnk\.com|qptr\.ru|uclck\.ru|go-link\.ru|envs\.sh|shorter\.me|sc\.link|goo\.su))/i;
+        const regexBlockDomainShortlinks = /(?:https?:\/\/(?:www\.)?)?(surl\.li|u\.to|t\.co|gclnk\.com|qptr\.ru|uclck\.ru|go-link\.ru|envs\.sh|shorter\.me|sc\.link|goo\.su)\/\S*link\S*/gi;
         
         if (regexBlockDomainShortlinks.test(message.content)) {
-            // Increment the count of phishing links deleted
             await db.security.findOneAndUpdate({}, { $inc: { count: 1 } }, { new: true, upsert: true });
 
-            // Delete the phishing message
             await message.delete();
 
-            // Kick the user who sent the malicious link
             try {
                 const member = message.guild?.members.cache.get(message.author.id);
                 if (member) {
                     await member.kick("Sent a malicious link");
                 }
             } catch (error) {
-                console.error("An error occurred while trying to kick the user:", error);
+                console.log("An error occurred while trying to kick the user:", error);
             }
-
-            const logChannelId = guildData.securitySystem.channels!.logs;
-            
+            const logChannelId = guildData.securitySystem.channels?.logs;
             if (logChannelId) {
                 const logChannel = message.guild?.channels.cache.get(`${logChannelId}`);
-                
                 if (logChannel && logChannel.type === ChannelType.GuildText) {
                     await logChannel.send(`🔨 Phishing URL sent by ${message.author} (**${message.author.username}**, \`${message.author.id}\`). Actions: \`DELETE\`,\`KICK\`\n> \`${message.content}\``);
                 } else {
