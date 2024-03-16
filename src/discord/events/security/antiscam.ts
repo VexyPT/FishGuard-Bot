@@ -10,11 +10,11 @@ new Event({
         const { client } = message;
 
         if (message.author.id == client.user.id) return;
+
         const guildId = message.guild!.id; 
         if (!guildId) return;
-        console.log("Teste 1 - Passou");
+
         const guildData = await db.guilds.get(guildId);
-        console.log("Teste 2 - Passou");
         if (!guildData.securitySystem?.systemStatus) return;
 
         const regexBlockDomainShortlinks = /(?:https?:\/\/(?:www\.)?)?(surl\.li|u\.to|t\.co|gclnk\.com|qptr\.ru|uclck\.ru|go-link\.ru|envs\.sh|shorter\.me|sc\.link|goo\.su)\/\S*link\S*/gi;
